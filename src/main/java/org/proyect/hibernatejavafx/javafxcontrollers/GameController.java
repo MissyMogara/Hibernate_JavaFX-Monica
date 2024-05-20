@@ -6,6 +6,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import org.proyect.hibernatejavafx.View;
+import org.proyect.hibernatejavafx.ViewSwitcher;
 import org.proyect.hibernatejavafx.entities.Game;
 import org.proyect.hibernatejavafx.entities.Player;
 import org.proyect.hibernatejavafx.repositories.GameRepository;
@@ -17,6 +19,10 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class GameController implements Initializable {
+
+    public void toMenu(){
+        ViewSwitcher.switchTo(View.MENU);
+    }
 
     @FXML
     private TableView<Game> gameTable;

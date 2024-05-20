@@ -24,11 +24,11 @@
             <TableColumn fx:id="playerCountry" prefWidth="75.0" text="Country"/>
         </columns>
         <columnResizePolicy>
-
+    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
         </columnResizePolicy>
     </TableView>
-    <Button text="Videogames"/>
-    <Button text="Games"/>
+    <Button text="Menu" onAction="#toMenu"/>
+
 
 </VBox>
 
