@@ -6,6 +6,7 @@ import org.hibernate.boot.Metadata;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.proyect.hibernatejavafx.entities.Player;
 
 public class HibernateUtil {
     private static StandardServiceRegistry registry;
@@ -19,7 +20,7 @@ public class HibernateUtil {
 
                 // Create MetadataSources
                 MetadataSources sources = new MetadataSources(registry);
-//                sources.addAnnotatedClass(Player.class);
+                sources.addAnnotatedClass(Player.class);
 
                 // Create Metadata
                 Metadata metadata = sources.getMetadataBuilder().build();

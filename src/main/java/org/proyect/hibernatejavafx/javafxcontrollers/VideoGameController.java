@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
 
 public class VideoGameController implements Initializable {
 
+
     @FXML
     private TableView<VideoGame> videoGameTable;
     @FXML
