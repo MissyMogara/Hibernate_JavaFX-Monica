@@ -4,7 +4,8 @@ public enum View {
     MENU("menu-view.fxml"),
     VIDEOGAMES("videogames-view.fxml"),
     PLAYERS("players-view.fxml"),
-    GAMES("games-view.fxml");
+    GAMES("games-view.fxml"),
+    STATISTICS_VIDEOGAMES("videogamesStatistics-view.fxml");
 
     private String fileName;
 

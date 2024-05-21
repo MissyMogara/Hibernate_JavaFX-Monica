@@ -34,6 +34,13 @@ public class GameController implements Initializable {
     public TableColumn<Player, Integer> gameDuration;
 
 
+    /**
+     * This method change the scene to Menu scene.
+     */
+    public void toMenu3(){
+        ViewSwitcher.switchTo(View.MENU);
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         //CALL HIBERNATE TO GET PLAYERS
@@ -48,5 +55,22 @@ public class GameController implements Initializable {
         gameDuration.setCellValueFactory(new PropertyValueFactory<>("matchDuration"));
 
         gameTable.setItems(FXCollections.observableArrayList(games));
+        gm.closeSession();
+    }
+
+    public void updateTable(){
+        //CALL HIBERNATE TO GET PLAYERS
+        GameRepository gm = new GameRepository();
+        List<Game> games = gm.findAll();
+
+        games.forEach(System.out::println);
+
+        //"id" ATTRIBUTE NAME IN THE PLAYER CLASS
+        gameId.setCellValueFactory(new PropertyValueFactory<>("id"));
+        gameHour.setCellValueFactory(new PropertyValueFactory<>("dateHourMatch"));
+        gameDuration.setCellValueFactory(new PropertyValueFactory<>("matchDuration"));
+
+        gameTable.setItems(FXCollections.observableArrayList(games));
+        gm.closeSession();
     }
 }

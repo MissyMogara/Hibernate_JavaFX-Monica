@@ -77,7 +77,8 @@
       </children>
    </GridPane>
  <Button fx:id="insert" mnemonicParsing="false" onAction="#insertNewVideoGame" text="Insert" />
-   <Button mnemonicParsing="false" text="Delete" />
+   <Button mnemonicParsing="false" text="Delete"  onAction="#deleteVideogame"/>
+    <Button onAction="#toStatistics" text="Statistics" />
     <Button onAction="#toMenu" text="Menu" />
 
 

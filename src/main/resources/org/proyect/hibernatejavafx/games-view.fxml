@@ -13,7 +13,7 @@
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
     </padding>
 
-    <TableView fx:id="gameTable" prefWidth="75.0" prefHeight="45.0">
+    <TableView fx:id="gameTable" prefWidth="721.0" prefHeight="222.0">
 
         <columns>
             <TableColumn fx:id="gameId" prefWidth="75.0" text="Id"/>

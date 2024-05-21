@@ -11,10 +11,13 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import org.proyect.hibernatejavafx.View;
 import org.proyect.hibernatejavafx.ViewSwitcher;
 import org.proyect.hibernatejavafx.entities.Category;
+import org.proyect.hibernatejavafx.entities.Game;
 import org.proyect.hibernatejavafx.entities.VideoGame;
+import org.proyect.hibernatejavafx.repositories.GameRepository;
 import org.proyect.hibernatejavafx.repositories.VideoGameRepository;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
@@ -45,12 +48,81 @@ public class VideoGameController implements Initializable {
     @FXML
     private TextField category_videogame;
 
+
+    @FXML
+    private TableView<VideoGame> videoGameTable;
+    @FXML
+    public TableColumn<VideoGame, Long> videoGameId;
+    @FXML
+    public TableColumn<VideoGame, String> videoGameName;
+    @FXML
+    public TableColumn<VideoGame, String> videoGamePlataform;
+    @FXML
+    public TableColumn<VideoGame, Integer> videoGamePegi;
+    @FXML
+    public TableColumn<VideoGame, String> videoGameCategory;
+
+    //STATISTICS
+
+    @FXML
+    private TableView<VideoGame> videoGameTableStatistic;
+    @FXML
+    public TableColumn<VideoGame, Long> videoGameIdStatistic;
+    @FXML
+    public TableColumn<VideoGame, String> videoGameNameStatistic;
+    @FXML
+    public TableColumn<VideoGame, String> videoGamePlataformStatistic;
+    @FXML
+    public TableColumn<VideoGame, Integer> videoGamePegiStatistic;
+    @FXML
+    public TableColumn<VideoGame, String> videoGameCategoryStatistic;
+
+    //METHODS
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        //CALL HIBERNATE TO GET VIDEOGAMES
+        VideoGameRepository vr = new VideoGameRepository();
+        List<VideoGame> videoGames = vr.findAll();
+
+
+        //"id" ATTRIBUTE NAME IN THE VIDEOGAME CLASS
+        videoGameId.setCellValueFactory(new PropertyValueFactory<>("id"));
+        videoGameName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        videoGamePlataform.setCellValueFactory(new PropertyValueFactory<>("plataform"));
+        videoGamePegi.setCellValueFactory(new PropertyValueFactory<>("pegi"));
+        videoGameCategory.setCellValueFactory(new PropertyValueFactory<>("category"));
+        videoGameTable.setItems(FXCollections.observableArrayList(videoGames));
+
+    }
+
+    public void updateTable(){
+        //CALL HIBERNATE TO GET VIDEOGAMES
+        VideoGameRepository vr = new VideoGameRepository();
+        List<VideoGame> videoGames = vr.findAll();
+
+
+        //"id" ATTRIBUTE NAME IN THE VIDEOGAME CLASS
+        videoGameId.setCellValueFactory(new PropertyValueFactory<>("id"));
+        videoGameName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        videoGamePlataform.setCellValueFactory(new PropertyValueFactory<>("plataform"));
+        videoGamePegi.setCellValueFactory(new PropertyValueFactory<>("pegi"));
+        videoGameCategory.setCellValueFactory(new PropertyValueFactory<>("category"));
+        videoGameTable.setItems(FXCollections.observableArrayList(videoGames));
+    }
+
     //ACTIONS
 
+    /**
+     * This method change the scene to Menu scene.
+     */
     public void toMenu(){
         ViewSwitcher.switchTo(View.MENU);
     }
 
+    /**
+     * This method insert a new videogame.
+     */
     public void insertNewVideoGame(){
 
         if(name_videogame.getText() != null){
@@ -127,52 +199,39 @@ public class VideoGameController implements Initializable {
         updateTable();
     }
 
-
-
-    @FXML
-    private TableView<VideoGame> videoGameTable;
-    @FXML
-    public TableColumn<VideoGame, Long> videoGameId;
-    @FXML
-    public TableColumn<VideoGame, String> videoGameName;
-    @FXML
-    public TableColumn<VideoGame, String> videoGamePlataform;
-    @FXML
-    public TableColumn<VideoGame, Integer> videoGamePegi;
-    @FXML
-    public TableColumn<VideoGame, String> videoGameCategory;
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        //CALL HIBERNATE TO GET VIDEOGAMES
+    /**
+     * This method remove the last videogame created.
+     */
+    public void deleteVideogame(){
         VideoGameRepository vr = new VideoGameRepository();
         List<VideoGame> videoGames = vr.findAll();
 
-        videoGames.forEach(System.out::println);
-
-        //"id" ATTRIBUTE NAME IN THE VIDEOGAME CLASS
-        videoGameId.setCellValueFactory(new PropertyValueFactory<>("id"));
-        videoGameName.setCellValueFactory(new PropertyValueFactory<>("name"));
-        videoGamePlataform.setCellValueFactory(new PropertyValueFactory<>("plataform"));
-        videoGamePegi.setCellValueFactory(new PropertyValueFactory<>("pegi"));
-        videoGameCategory.setCellValueFactory(new PropertyValueFactory<>("category"));
-        videoGameTable.setItems(FXCollections.observableArrayList(videoGames));
+        vr.delete(vr.findById(videoGames.stream().count()));
+        updateTable();
     }
 
-    public void updateTable(){
-        //CALL HIBERNATE TO GET VIDEOGAMES
+    public void videoGameWithMoreThan2Players(){
+        GameRepository gr = new GameRepository();
         VideoGameRepository vr = new VideoGameRepository();
-        List<VideoGame> videoGames = vr.findAll();
 
-        videoGames.forEach(System.out::println);
+        List<Game> games = gr.findAll();
+        List<VideoGame> videoGames =  games.stream().filter(g -> g.getPlayerList().stream().count() > 2L)
+                .map(Game::getVideoGame).collect(Collectors.toList());
 
-        //"id" ATTRIBUTE NAME IN THE VIDEOGAME CLASS
-        videoGameId.setCellValueFactory(new PropertyValueFactory<>("id"));
-        videoGameName.setCellValueFactory(new PropertyValueFactory<>("name"));
-        videoGamePlataform.setCellValueFactory(new PropertyValueFactory<>("plataform"));
-        videoGamePegi.setCellValueFactory(new PropertyValueFactory<>("pegi"));
-        videoGameCategory.setCellValueFactory(new PropertyValueFactory<>("category"));
-        videoGameTable.setItems(FXCollections.observableArrayList(videoGames));
+        videoGameIdStatistic.setCellValueFactory(new PropertyValueFactory<>("id"));
+        videoGameNameStatistic.setCellValueFactory(new PropertyValueFactory<>("name"));
+        videoGamePlataformStatistic.setCellValueFactory(new PropertyValueFactory<>("plataform"));
+        videoGamePegiStatistic.setCellValueFactory(new PropertyValueFactory<>("pegi"));
+        videoGameCategoryStatistic.setCellValueFactory(new PropertyValueFactory<>("category"));
+        videoGameTableStatistic.setItems(FXCollections.observableArrayList(videoGames));
+
+        gr.closeSession();
+        vr.closeSession();
+
+    }
+
+    public void toStatistics(){
+        ViewSwitcher.switchTo(View.STATISTICS_VIDEOGAMES);
     }
 
 }
