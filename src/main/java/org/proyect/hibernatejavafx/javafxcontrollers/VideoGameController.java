@@ -62,7 +62,7 @@ public class VideoGameController implements Initializable {
     @FXML
     public TableColumn<VideoGame, String> videoGameCategory;
 
-    //STATISTICS
+    /* //STATISTICS
 
     @FXML
     private TableView<VideoGame> videoGameTableStatistic;
@@ -75,7 +75,7 @@ public class VideoGameController implements Initializable {
     @FXML
     public TableColumn<VideoGame, Integer> videoGamePegiStatistic;
     @FXML
-    public TableColumn<VideoGame, String> videoGameCategoryStatistic;
+    public TableColumn<VideoGame, String> videoGameCategoryStatistic; */
 
     //METHODS
 
@@ -209,7 +209,7 @@ public class VideoGameController implements Initializable {
         vr.delete(vr.findById(videoGames.stream().count()));
         updateTable();
     }
-
+    /*
     public void videoGameWithMoreThan2Players(){
         GameRepository gr = new GameRepository();
         VideoGameRepository vr = new VideoGameRepository();
@@ -229,9 +229,10 @@ public class VideoGameController implements Initializable {
         vr.closeSession();
 
     }
-
+    */
+    /*
     public void toStatistics(){
         ViewSwitcher.switchTo(View.STATISTICS_VIDEOGAMES);
     }
-
+    */
 }

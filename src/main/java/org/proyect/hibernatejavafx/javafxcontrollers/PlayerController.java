@@ -27,12 +27,9 @@ public class PlayerController implements Initializable {
     private String nick;
     private String email;
     private String language;
-    private String favoriteVideoGame;
     private String country;
 
-    public void toMenu(){
-        ViewSwitcher.switchTo(View.MENU);
-    }
+
 
     //FXML
 
@@ -46,6 +43,7 @@ public class PlayerController implements Initializable {
     private TextField language_player;
     @FXML
     private TextField country_player;
+
 
 
     @FXML
@@ -64,10 +62,11 @@ public class PlayerController implements Initializable {
     public TableColumn<Player, String> playerCountry;
 
 
+
     /**
      * This method change the scene to Menu scene.
      */
-    public void toMenu2(){
+    public void toMenu(){
         ViewSwitcher.switchTo(View.MENU);
     }
 
@@ -75,6 +74,7 @@ public class PlayerController implements Initializable {
      * This method insert a new player.
      */
     public void insertNewPlayer(){
+
 
         if(name_player != null){
             this.name = name_player.getText();
@@ -91,7 +91,6 @@ public class PlayerController implements Initializable {
         if(country_player != null){
             this.country = country_player.getText();
         }
-
         PlayerRepository playerRepository = new PlayerRepository();
         Player player1 = new Player(this.name,this.nick,this.email, this.language, this.country);
         playerRepository.insert(player1);

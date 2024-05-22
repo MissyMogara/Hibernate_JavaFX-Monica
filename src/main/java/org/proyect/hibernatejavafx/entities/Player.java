@@ -24,7 +24,7 @@ public class Player {
 
     private String language;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER)
     private VideoGame favoriteVideoGame;
 
     private String country;
@@ -37,6 +37,7 @@ public class Player {
         this.language = language;
         this.country = country;
     }
+
 
     //TO STRING
     @Override
