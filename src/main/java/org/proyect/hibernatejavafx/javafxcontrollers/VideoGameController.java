@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import org.proyect.hibernatejavafx.View;
@@ -47,7 +48,10 @@ public class VideoGameController implements Initializable {
 
     @FXML
     private TextField category_videogame;
-
+    @FXML
+    private TextArea resultOfCategoryExists;
+    @FXML
+    private TextField categoryExists;
 
     @FXML
     private TableView<VideoGame> videoGameTable;
@@ -62,20 +66,6 @@ public class VideoGameController implements Initializable {
     @FXML
     public TableColumn<VideoGame, String> videoGameCategory;
 
-    /* //STATISTICS
-
-    @FXML
-    private TableView<VideoGame> videoGameTableStatistic;
-    @FXML
-    public TableColumn<VideoGame, Long> videoGameIdStatistic;
-    @FXML
-    public TableColumn<VideoGame, String> videoGameNameStatistic;
-    @FXML
-    public TableColumn<VideoGame, String> videoGamePlataformStatistic;
-    @FXML
-    public TableColumn<VideoGame, Integer> videoGamePegiStatistic;
-    @FXML
-    public TableColumn<VideoGame, String> videoGameCategoryStatistic; */
 
     //METHODS
 
@@ -191,6 +181,24 @@ public class VideoGameController implements Initializable {
                 this.category = Category.ROGUELIKE;
             }
         }
+        // SPORTS
+        if(category_videogame.getText() != null){
+            if (category_videogame.getText().equals("SPORTS")){
+                this.category = Category.SPORTS;
+            }
+        }
+        //ADVENTURE
+        if(category_videogame.getText() != null){
+            if (category_videogame.getText().equals("ADVENTURE")){
+                this.category = Category.ADVENTURE;
+            }
+        }
+        //RACING
+        if(category_videogame.getText() != null){
+            if (category_videogame.getText().equals("RACING")){
+                this.category = Category.RACING;
+            }
+        }
 
         VideoGameRepository videoGameRepository = new VideoGameRepository();
         VideoGame videoGame1 = new VideoGame(this.name,this.plataform,this.pegi, this.category);
@@ -209,30 +217,23 @@ public class VideoGameController implements Initializable {
         vr.delete(vr.findById(videoGames.stream().count()));
         updateTable();
     }
-    /*
-    public void videoGameWithMoreThan2Players(){
-        GameRepository gr = new GameRepository();
-        VideoGameRepository vr = new VideoGameRepository();
 
-        List<Game> games = gr.findAll();
-        List<VideoGame> videoGames =  games.stream().filter(g -> g.getPlayerList().stream().count() > 2L)
-                .map(Game::getVideoGame).collect(Collectors.toList());
+    /**
+     * This method returns the number of videogames of a category type.
+     */
+    public void numberOfVideogameFromCategory(){
 
-        videoGameIdStatistic.setCellValueFactory(new PropertyValueFactory<>("id"));
-        videoGameNameStatistic.setCellValueFactory(new PropertyValueFactory<>("name"));
-        videoGamePlataformStatistic.setCellValueFactory(new PropertyValueFactory<>("plataform"));
-        videoGamePegiStatistic.setCellValueFactory(new PropertyValueFactory<>("pegi"));
-        videoGameCategoryStatistic.setCellValueFactory(new PropertyValueFactory<>("category"));
-        videoGameTableStatistic.setItems(FXCollections.observableArrayList(videoGames));
 
-        gr.closeSession();
-        vr.closeSession();
+        VideoGameRepository videoGameRepository = new VideoGameRepository();
+
+        List<VideoGame> videogames = videoGameRepository.findAll();
+
+        Long result = videogames.stream().filter(v -> v.getCategory().toString().equals(categoryExists.getText())).count();
+
+        resultOfCategoryExists.setText("There is " + result.toString() + " " + categoryExists.getText() + " videogames");
+
+        videoGameRepository.closeSession();
 
     }
-    */
-    /*
-    public void toStatistics(){
-        ViewSwitcher.switchTo(View.STATISTICS_VIDEOGAMES);
-    }
-    */
+
 }

@@ -77,10 +77,30 @@
       </children>
    </GridPane>
  <Button fx:id="insert" mnemonicParsing="false" onAction="#insertNewVideoGame" text="Insert" />
-   <Button mnemonicParsing="false" text="Delete"  onAction="#deleteVideogame"/>
-    <Button onAction="#toStatistics" text="Statistics" />
+   <Button mnemonicParsing="false" onAction="#deleteVideogame" text="Delete" />
+   <Label text="How many videogames of a category exists? (Insert Category):" />
+   <GridPane>
+     <columnConstraints>
+       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+     </columnConstraints>
+     <rowConstraints>
+       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+     </rowConstraints>
+      <children>
+         <TextArea fx:id="resultOfCategoryExists" editable="false" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
+            <GridPane.margin>
+               <Insets left="5.0" right="5.0" />
+            </GridPane.margin>
+         </TextArea>
+         <TextField fx:id="categoryExists">
+            <GridPane.margin>
+               <Insets left="5.0" right="5.0" />
+            </GridPane.margin>
+         </TextField>
+      </children>
+   </GridPane>
+   <Button fx:id="getResults" mnemonicParsing="false" text="Get results!" onAction="#numberOfVideogameFromCategory"/>
     <Button onAction="#toMenu" text="Menu" />
-
-
 
 </VBox>

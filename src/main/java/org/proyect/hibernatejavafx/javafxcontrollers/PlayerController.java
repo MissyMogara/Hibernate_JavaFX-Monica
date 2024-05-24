@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import org.proyect.hibernatejavafx.View;
@@ -16,6 +17,7 @@ import org.proyect.hibernatejavafx.repositories.PlayerRepository;
 import org.proyect.hibernatejavafx.repositories.VideoGameRepository;
 
 import java.net.URL;
+import java.util.Comparator;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -43,7 +45,8 @@ public class PlayerController implements Initializable {
     private TextField language_player;
     @FXML
     private TextField country_player;
-
+    @FXML
+    private TextArea longestNickPlayer;
 
 
     @FXML
@@ -146,4 +149,17 @@ public class PlayerController implements Initializable {
 
         pl.closeSession();
     }
+
+    public void searchLongestNickPlayer(){
+        PlayerRepository playerRepository = new PlayerRepository();
+
+        List<Player> players = playerRepository.findAll();
+
+        Player longestPlayer = players.stream().max(Comparator.comparing(p -> p.getNick().length())).get();
+
+        longestNickPlayer.setText(longestPlayer.getNick() + " " + "Have " + longestPlayer.getNick().length() + " letters");
+
+        playerRepository.closeSession();
+    }
+
 }

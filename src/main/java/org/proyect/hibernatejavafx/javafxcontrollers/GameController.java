@@ -122,8 +122,9 @@ public class GameController implements Initializable {
         GameRepository gm = new GameRepository();
         List<Game> games = gm.findAll();
 
-        theLongestMatchDuration.setText(games.stream().sorted(Comparator.comparing(Game::getMatchDuration).reversed())
-                .findFirst().get().getId().toString());
+        Game game = games.stream().sorted(Comparator.comparing(Game::getMatchDuration).reversed())
+                .findFirst().get();
+        theLongestMatchDuration.setText("The game id: " + game.getId() + " had a duration of " + game.getMatchDuration() + " minutes.");
 
         gm.closeSession();
     }
